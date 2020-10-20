@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MdDelete, MdRoom } from 'react-icons/md';
+import { MdDelete, MdRoom, MdStar } from 'react-icons/md';
 
 const Remove = styled.div`
   opacity: 0;
@@ -12,10 +12,6 @@ const Remove = styled.div`
 
   &:hover {
     color: #ff6b6b;
-  }
-
-  & + & {
-    border-top: 1px solid #dee2e6;
   }
 `;
 
@@ -35,8 +31,35 @@ const PlaceListItemBlock = styled.div`
 `;
 const Text = styled.div`
   margin-left: 0.5rem;
-  flex: 1;
 `;
+
+const Rating = styled.div`
+  width: 200px;
+  font-size: 18px;
+  color: #1c7ed6;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 10px;
+  background-color: #228be6;
+  border-radius: 5px;
+  padding: 5px;
+
+  .active {
+    color: yellow;
+  }
+
+  .point {
+    margin-left: auto;
+    margin-right: 10px;
+    font-size: 0.8rem;
+    color: #fff;
+  }
+`;
+
 const PlaceBox = styled.div`
   flex: 1;
   display: flex;
@@ -46,11 +69,56 @@ const PlaceBox = styled.div`
 
 const PlaceListItem = ({ place, onRemove }) => {
   const { id, name } = place;
+
+  const marking = (e) => {
+    let element = e.currentTarget;
+    const parent = element.parentNode;
+    const children = parent.childNodes;
+    const lastChild = parent.lastChild;
+
+    let index = 0;
+    for (let i = 0; i < children.length - 1; i++) {
+      if (element === children[i]) {
+        index = i;
+      }
+    }
+
+    for (let i = 0; i <= index; i++) {
+      children[i].classList.add('active');
+    }
+
+    for (let i = index + 1; i <= children.length - 1; i++) {
+      children[i].classList.remove('active');
+    }
+
+    let score = index + 1;
+
+    if (score === 1) {
+      lastChild.innerHTML = `${score}점 : 최악의 식당`;
+    } else if (score === 2) {
+      lastChild.innerHTML = `${score}점 : 음식이 별로`;
+    } else if (score === 3) {
+      lastChild.innerHTML = `${score}점 : 먹을만한 곳`;
+    } else if (score === 4) {
+      lastChild.innerHTML = `${score}점 : 맛있는 식당`;
+    } else {
+      lastChild.innerHTML = `${score}점 : 최고의 맛집`;
+    }
+  };
+
   return (
     <PlaceListItemBlock>
       <PlaceBox>
         <MdRoom />
         <Text>{name}</Text>
+        <Rating className="parent">
+          <MdStar className="star" onClick={marking} />
+          <MdStar className="star" onClick={marking} />
+          <MdStar className="star" onClick={marking} />
+          <MdStar className="star" onClick={marking} />
+          <MdStar className="star" onClick={marking} />
+          <div className="point">별점을 입력하세요</div>
+        </Rating>
       </PlaceBox>
       <Remove onClick={() => onRemove(id)}>
         <MdDelete />
