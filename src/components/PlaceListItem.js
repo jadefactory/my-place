@@ -37,8 +37,7 @@ const Text = styled.div`
   margin-left: 0.5rem;
   flex: 1;
 `;
-const CheckBox = styled.div`
-  cursor: pointer;
+const PlaceBox = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
@@ -49,10 +48,10 @@ const PlaceListItem = ({ place, onRemove }) => {
   const { id, name } = place;
   return (
     <PlaceListItemBlock>
-      <CheckBox>
+      <PlaceBox>
         <MdRoom />
         <Text>{name}</Text>
-      </CheckBox>
+      </PlaceBox>
       <Remove onClick={() => onRemove(id)}>
         <MdDelete />
       </Remove>

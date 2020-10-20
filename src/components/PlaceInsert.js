@@ -19,6 +19,11 @@ const PlaceInsertBlock = styled.form`
 
     &::placeholder {
       color: #4dabf7;
+      font-size: 1rem;
+    }
+
+    &:focus::placeholder {
+      visibility: hidden;
     }
   }
 
@@ -33,7 +38,6 @@ const PlaceInsertBlock = styled.form`
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: 0.1s background ease-in;
 
     &:hover {
       background: #37b24d;
