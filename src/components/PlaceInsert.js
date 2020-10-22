@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import { MdAdd } from 'react-icons/md';
+import { PlaceDispatchContext, PlaceNextIdContext } from '../PlaceContext';
 
 const PlaceInsertBlock = styled.form`
   display: flex;
@@ -45,8 +46,12 @@ const PlaceInsertBlock = styled.form`
   }
 `;
 
-const PlaceInsert = ({ onInsert }) => {
+const PlaceInsert = () => {
+  const dispatch = useContext(PlaceDispatchContext);
+  const nextId = useContext(PlaceNextIdContext);
+
   const [value, setValue] = useState('');
+
   const onChange = useCallback((e) => {
     setValue(e.target.value);
   }, []);
@@ -56,12 +61,19 @@ const PlaceInsert = ({ onInsert }) => {
         window.alert('장소를 입력해주세요');
         e.preventDefault();
       } else {
-        onInsert(value);
-        setValue('');
         e.preventDefault();
+        dispatch({
+          type: 'CREATE',
+          place: {
+            id: nextId.current,
+            name: value,
+          },
+        });
+        setValue('');
+        nextId.current += 1;
       }
     },
-    [onInsert, value]
+    [value, dispatch, nextId]
   );
 
   return (
@@ -78,4 +90,4 @@ const PlaceInsert = ({ onInsert }) => {
   );
 };
 
-export default PlaceInsert;
+export default React.memo(PlaceInsert);

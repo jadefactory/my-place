@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { MdDelete, MdRoom, MdStar } from 'react-icons/md';
+import { PlaceDispatchContext } from '../PlaceContext';
 
 const Remove = styled.div`
   opacity: 0;
@@ -67,10 +68,15 @@ const PlaceBox = styled.div`
   color: #1c7ed6;
 `;
 
-const PlaceListItem = ({ place, onRemove }) => {
-  const { id, name } = place;
+const PlaceListItem = ({ id, name }) => {
+  const dispatch = useContext(PlaceDispatchContext);
+  const onRemove = () =>
+    dispatch({
+      type: 'REMOVE',
+      id,
+    });
 
-  const marking = (e) => {
+  const onMarking = (e) => {
     let element = e.currentTarget;
     const parent = element.parentNode;
     const children = parent.childNodes;
@@ -112,19 +118,19 @@ const PlaceListItem = ({ place, onRemove }) => {
         <MdRoom />
         <Text>{name}</Text>
         <Rating className="parent">
-          <MdStar className="star" onClick={marking} />
-          <MdStar className="star" onClick={marking} />
-          <MdStar className="star" onClick={marking} />
-          <MdStar className="star" onClick={marking} />
-          <MdStar className="star" onClick={marking} />
+          <MdStar className="star" onClick={onMarking} />
+          <MdStar className="star" onClick={onMarking} />
+          <MdStar className="star" onClick={onMarking} />
+          <MdStar className="star" onClick={onMarking} />
+          <MdStar className="star" onClick={onMarking} />
           <div className="point">별점을 입력하세요</div>
         </Rating>
       </PlaceBox>
-      <Remove onClick={() => onRemove(id)}>
+      <Remove onClick={onRemove}>
         <MdDelete />
       </Remove>
     </PlaceListItemBlock>
   );
 };
 
-export default PlaceListItem;
+export default React.memo(PlaceListItem);

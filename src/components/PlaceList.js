@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import PlaceListItem from './PlaceListItem';
 import { MdNotificationsNone } from 'react-icons/md';
+
+import { PlaceStateContext } from '../PlaceContext';
 
 const PlaceListBlock = styled.div`
   min-height: 40px;
@@ -27,12 +29,14 @@ const ErrorMessage = styled.div`
   }
 `;
 
-const PlaceList = ({ places, onRemove }) => {
+const PlaceList = () => {
+  const places = useContext(PlaceStateContext);
+
   return (
     <PlaceListBlock>
       {places.length !== 0 ? (
         places.map((place) => (
-          <PlaceListItem place={place} key={place.id} onRemove={onRemove} />
+          <PlaceListItem key={place.id} id={place.id} name={place.name} />
         ))
       ) : (
         <ErrorMessage>
