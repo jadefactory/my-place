@@ -36,7 +36,12 @@ const PlaceList = () => {
     <PlaceListBlock>
       {places.length !== 0 ? (
         places.map((place) => (
-          <PlaceListItem key={place.id} id={place.id} name={place.name} />
+          <PlaceListItem
+            key={place.id}
+            id={place.id}
+            name={place.name}
+            star={place.star}
+          />
         ))
       ) : (
         <ErrorMessage>

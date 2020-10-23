@@ -1,9 +1,9 @@
 import React, { useRef, useReducer, createContext } from 'react';
 
 const initialPlaces = [
-  { id: 1, name: '청년다방 구성점' },
-  { id: 2, name: '뚱보돈까스 구성점' },
-  { id: 3, name: '스타벅스 용인구성점' },
+  { id: 1, name: '청년다방 구성점', star: 3 },
+  { id: 2, name: '뚱보돈까스 구성점', star: 5 },
+  { id: 3, name: '스타벅스 용인구성점', star: 4 },
 ];
 
 function placeReducer(state, action) {
@@ -20,6 +20,7 @@ function placeReducer(state, action) {
 const PlaceStateContext = createContext();
 const PlaceDispatchContext = createContext();
 const PlaceNextIdContext = createContext();
+const PlaceStarPointContext = createContext();
 
 export function PlaceProvider({ children }) {
   const [state, dispatch] = useReducer(placeReducer, initialPlaces);
@@ -28,11 +29,18 @@ export function PlaceProvider({ children }) {
     <PlaceStateContext.Provider value={state}>
       <PlaceDispatchContext.Provider value={dispatch}>
         <PlaceNextIdContext.Provider value={nextId}>
-          {children}
+          <PlaceStarPointContext.Provider>
+            {children}
+          </PlaceStarPointContext.Provider>
         </PlaceNextIdContext.Provider>
       </PlaceDispatchContext.Provider>
     </PlaceStateContext.Provider>
   );
 }
 
-export { PlaceStateContext, PlaceDispatchContext, PlaceNextIdContext };
+export {
+  PlaceStateContext,
+  PlaceDispatchContext,
+  PlaceNextIdContext,
+  PlaceStarPointContext,
+};

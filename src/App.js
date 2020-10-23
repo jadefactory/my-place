@@ -1,7 +1,7 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import ListTemplate from './components/ListTemplate';
-import PlaceInsert from './components/PlaceInsert';
+import PlaceAdd from './components/PlaceAdd';
 import PlaceList from './components/PlaceList';
 import { PlaceProvider } from './PlaceContext';
 
@@ -19,7 +19,7 @@ const App = () => {
       <GlobalStyle />
       <PlaceProvider>
         <ListTemplate>
-          <PlaceInsert />
+          <PlaceAdd />
           <PlaceList />
         </ListTemplate>
       </PlaceProvider>

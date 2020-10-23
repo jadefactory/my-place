@@ -3,9 +3,10 @@ import styled from 'styled-components';
 
 const ListTemplateBlock = styled.div`
   width: 512px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 6rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 4px;
   overflow: hidden;
 `;
@@ -25,7 +26,7 @@ const Content = styled.div`
 const ListTemplate = ({ children }) => {
   return (
     <ListTemplateBlock>
-      <AppTitle>내가 다녀온 맛집들</AppTitle>
+      <AppTitle>나만의 맛집들 - MYPLACE</AppTitle>
       <Content>{children}</Content>
     </ListTemplateBlock>
   );
